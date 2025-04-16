@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InputSimulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Active Window Info" Height="150" Width="400">
+  <StackPanel Margin="10" VerticalAlignment="Center">
+    <TextBlock x:Name="TitleText" FontSize="16" Margin="0,0,0,5"/>
+    <TextBlock x:Name="HandleText" Margin="0,0,0,2"/>
+    <TextBlock x:Name="ProcessText"/>
+  </StackPanel>
 </Window>
