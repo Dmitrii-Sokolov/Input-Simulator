@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace InputSimulator
 {
   public partial class MainWindow : Window
   {
+    private const int SecondsToRepeat = 10;
+    int state = 0;
+    char[] keys = new char[] {'a', 'b'};
+
     // Import functions from user32.dll
     [DllImport("user32.dll")]
     static extern IntPtr GetForegroundWindow();
@@ -36,7 +29,7 @@ namespace InputSimulator
       InitializeComponent();
 
       // Timer will tick every second
-      _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+      _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(SecondsToRepeat) };
       _timer.Tick += UpdateActiveWindowInfo;
       _timer.Start();
     }
@@ -59,6 +52,10 @@ namespace InputSimulator
       TitleText.Text = $"Title: {title}";
       HandleText.Text = $"HWND: 0x{hWnd.ToInt64():X}";
       ProcessText.Text = $"PID: {pid}, TID: {tid}";
+
+      KeyboardEmulator.SendKey((ushort)(0x41 + keys[state] - 'a'));
+
+      state = (state + 1) % keys.Length;
     }
   }
 }
